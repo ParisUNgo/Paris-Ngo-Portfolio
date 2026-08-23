@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paris Ngo — Mechanical Engineering Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0E2A47;
+    --navy-deep:#081B30;
+    --navy-panel:#123A5E;
+    --line:#DCE6EF;
+    --line-dim:#93A9BE;
+    --safety:#FF7A1A;
+    --paper:#F5F3EA;
+    --graphite:#1E2126;
+    --graphite-soft:#4A5058;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation:none !important;transition:none !important;}
+  }
+  body{
+    background:var(--navy);
+    color:var(--line);
+    font-family:'IBM Plex Sans',sans-serif;
+    line-height:1.55;
+  }
+  .bg-grid{
+    background-image:
+      repeating-linear-gradient(0deg, rgba(220,230,239,0.05) 0px, rgba(220,230,239,0.05) 1px, transparent 1px, transparent 40px),
+      repeating-linear-gradient(90deg, rgba(220,230,239,0.05) 0px, rgba(220,230,239,0.05) 1px, transparent 1px, transparent 40px);
+  }
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  .display{font-family:'Big Shoulders Display',sans-serif;}
+  a{color:var(--safety);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  a:focus-visible, button:focus-visible{outline:2px solid var(--safety);outline-offset:3px;}
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky;top:0;z-index:50;
+    background:var(--navy-deep);
+    border-bottom:1px solid rgba(220,230,239,0.15);
+    padding:14px 6vw;
+    display:flex;justify-content:space-between;align-items:center;
+    flex-wrap:wrap;gap:10px;
+  }
+  nav .tag{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.12em;color:var(--line-dim);}
+  nav ul{display:flex;gap:26px;list-style:none;flex-wrap:wrap;}
+  nav ul a{
+    font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.1em;
+    color:var(--line);text-transform:uppercase;
+  }
+  nav ul a:hover{color:var(--safety);text-decoration:none;}
+
+  /* ---------- HERO / TITLE BLOCK ---------- */
+  header.hero{
+    padding:70px 6vw 50px;
+    border-bottom:1px solid rgba(220,230,239,0.15);
+  }
+  .status-chip{
+    display:inline-block;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;letter-spacing:0.12em;text-transform:uppercase;
+    color:var(--navy-deep);background:var(--safety);
+    padding:5px 10px;margin-bottom:22px;
+  }
+  h1.name{
+    font-family:'Big Shoulders Display',sans-serif;
+    font-weight:800;
+    font-size:clamp(46px, 9vw, 108px);
+    line-height:0.92;
+    letter-spacing:0.01em;
+    text-transform:uppercase;
+    color:#FFFFFF;
+  }
+  .role-line{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:clamp(12px,1.6vw,15px);
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--line-dim);
+    margin-top:14px;
+  }
+  .dim-divider{
+    display:flex;align-items:center;gap:8px;
+    margin:28px 0;color:var(--line-dim);
+  }
+  .dim-divider .tick{width:1px;height:10px;background:var(--line-dim);}
+  .dim-divider .rule{flex:1;height:1px;background:var(--line-dim);}
+  .hero-intro{
+    max-width:640px;font-size:16px;color:var(--line);
+  }
+  .contact-row{
+    margin-top:30px;display:flex;gap:26px;flex-wrap:wrap;
+    font-family:'IBM Plex Mono',monospace;font-size:13px;
+  }
+  .contact-row span{color:var(--line-dim);}
+
+  /* ---------- SECTION HEADERS ---------- */
+  section{padding:64px 6vw;border-bottom:1px solid rgba(220,230,239,0.15);}
+  .sheet-label{
+    display:flex;align-items:baseline;gap:14px;margin-bottom:40px;
+    flex-wrap:wrap;
+  }
+  .sheet-label .num{
+    font-family:'IBM Plex Mono',monospace;color:var(--safety);font-size:13px;letter-spacing:0.1em;
+  }
+  .sheet-label h2{
+    font-family:'Big Shoulders Display',sans-serif;
+    font-weight:700;font-size:clamp(30px,4vw,44px);
+    text-transform:uppercase;color:#fff;letter-spacing:0.01em;
+  }
+
+  /* ---------- PROJECT CARDS ---------- */
+  .project{
+    border:1px solid rgba(220,230,239,0.25);
+    margin-bottom:36px;
+    background:var(--navy-panel);
+  }
+  .project:last-child{margin-bottom:0;}
+  .project-head{
+    display:flex;justify-content:space-between;align-items:flex-start;gap:16px;
+    padding:20px 24px;border-bottom:1px solid rgba(220,230,239,0.2);flex-wrap:wrap;
+  }
+  .project-head h3{
+    font-family:'Big Shoulders Display',sans-serif;font-weight:700;
+    font-size:clamp(22px,2.6vw,30px);color:#fff;text-transform:uppercase;
+  }
+  .project-meta{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--line-dim);text-align:right;letter-spacing:0.06em;}
+  .project-award{
+    display:inline-block;margin-top:6px;font-family:'IBM Plex Mono',monospace;
+    font-size:11px;letter-spacing:0.08em;color:var(--safety);text-transform:uppercase;
+  }
+  .project-body{padding:24px;display:grid;grid-template-columns:1fr 1fr;gap:26px;}
+  @media (max-width:760px){.project-body{grid-template-columns:1fr;}}
+
+  .img-slot{
+    aspect-ratio:16/10;border:1px dashed var(--line-dim);position:relative;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--line-dim);
+    text-align:center;padding:20px;letter-spacing:0.05em;text-transform:uppercase;
+  }
+  .img-slot::before,.img-slot::after,
+  .img-slot .c2::before,.img-slot .c2::after{content:"";position:absolute;width:14px;height:14px;border-color:var(--safety);}
+  .img-slot::before{top:-1px;left:-1px;border-top:2px solid var(--safety);border-left:2px solid var(--safety);}
+  .img-slot::after{top:-1px;right:-1px;border-top:2px solid var(--safety);border-right:2px solid var(--safety);}
+  .img-slot .c2{position:absolute;inset:0;}
+  .img-slot .c2::before{bottom:-1px;left:-1px;border-bottom:2px solid var(--safety);border-left:2px solid var(--safety);}
+  .img-slot .c2::after{bottom:-1px;right:-1px;border-bottom:2px solid var(--safety);border-right:2px solid var(--safety);}
+
+  .project-text p{font-size:14.5px;margin-bottom:14px;}
+  .project-text .field-label{
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.1em;
+    color:var(--safety);text-transform:uppercase;display:block;margin-bottom:4px;
+  }
+  .stats{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px;}
+  .stat{
+    display:flex;align-items:center;gap:8px;
+    border:1px solid rgba(255,122,26,0.5);padding:6px 12px;
+  }
+  .stat .dot{width:7px;height:7px;border-radius:50%;background:var(--safety);flex-shrink:0;}
+  .stat span{font-family:'IBM Plex Mono',monospace;font-size:12px;color:#fff;}
+
+  /* ---------- BOM / SKILLS TABLE ---------- */
+  .bom{background:var(--paper);color:var(--graphite);}
+  .bom table{width:100%;border-collapse:collapse;font-family:'IBM Plex Mono',monospace;font-size:13px;}
+  .bom thead th{
+    text-align:left;padding:10px 14px;border-bottom:2px solid var(--graphite);
+    font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--graphite-soft);
+  }
+  .bom tbody td{padding:10px 14px;border-bottom:1px solid rgba(30,33,38,0.15);}
+  .bom tbody tr:hover{background:rgba(255,122,26,0.08);}
+  .bom .item-no{color:var(--graphite-soft);}
+  .bom .cat{color:var(--graphite-soft);}
+
+  /* ---------- EXPERIENCE ---------- */
+  .exp-item{
+    display:grid;grid-template-columns:220px 1fr;gap:24px;
+    padding:20px 0;border-bottom:1px solid rgba(220,230,239,0.15);
+  }
+  .exp-item:last-child{border-bottom:none;}
+  @media (max-width:640px){.exp-item{grid-template-columns:1fr;gap:6px;}}
+  .exp-item .when{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--line-dim);letter-spacing:0.06em;}
+  .exp-item h4{font-family:'Big Shoulders Display',sans-serif;font-size:20px;color:#fff;text-transform:uppercase;letter-spacing:0.01em;}
+  .exp-item .org{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--safety);margin:2px 0 8px;}
+  .exp-item p{font-size:14px;}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background:var(--navy-deep);padding:56px 6vw 40px;
+    text-align:left;
+  }
+  footer .cta{
+    font-family:'Big Shoulders Display',sans-serif;font-weight:700;
+    font-size:clamp(28px,4vw,44px);color:#fff;text-transform:uppercase;max-width:700px;
+  }
+  footer .contact-row{margin-top:24px;}
+  footer .fine{margin-top:40px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--line-dim);letter-spacing:0.05em;}
+</style>
+</head>
+<body class="bg-grid">
+
+<nav>
+  <span class="tag">PN&nbsp;/&nbsp;MECH-ENG&nbsp;/&nbsp;PORTFOLIO&nbsp;REV.A</span>
+  <ul>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<header class="hero">
+  <span class="status-chip">Seeking Summer / Fall 2027 Internships</span>
+  <h1 class="name">Paris Ngo</h1>
+  <div class="role-line">Mechanical Engineering &nbsp;·&nbsp; University of Texas at Dallas &nbsp;·&nbsp; Class of 2027</div>
+  <div class="dim-divider"><div class="tick"></div><div class="rule"></div><div class="tick"></div></div>
+  <p class="hero-intro">
+    I build and test hardware — from wearable assistive devices to safety-alert systems to CFD models of
+    vehicle aerodynamics. I'm most interested in mechanical, aerospace, automotive, and biomedical
+    engineering roles where I can move between CAD, analysis, and a physical prototype on the bench.
+  </p>
+  <div class="contact-row">
+    <div><span>TEL&nbsp;</span>936-553-9666</div>
+    <div><span>MAIL&nbsp;</span><a href="mailto:paris.u.ngo@gmail.com">paris.u.ngo@gmail.com</a></div>
+    <div><span>LINKEDIN&nbsp;</span><a href="https://linkedin.com/in/paris-ngo" target="_blank" rel="noopener">linkedin.com/in/paris-ngo</a></div>
+  </div>
+</header>
+
+<section id="projects">
+  <div class="sheet-label"><span class="num">01</span><h2>Projects</h2></div>
+
+  <div class="project">
+    <div class="project-head">
+      <div>
+        <h3>Automotive Aerodynamics CFD Analysis</h3>
+        <span class="project-award">Group Project — Fluid Mechanics</span>
+      </div>
+      <div class="project-meta">ANSYS · FLUENT<br>SUMMER 2026</div>
+    </div>
+    <div class="project-body">
+      <div class="img-slot">FIG. 1 — INSERT ANSYS CONTOUR / STREAMLINE PLOT<div class="c2"></div></div>
+      <div class="project-text">
+        <span class="field-label">Role</span>
+        <p>Simulations lead — set up the 2D steady RANS simulation and calculated the resulting aerodynamic forces.</p>
+        <span class="field-label">What it does</span>
+        <p>Solves the steady RANS equations over a 2D Honda Civic body cross-section using a k-ε turbulence
+        model, producing velocity/pressure contour plots and streamlines, then derives the aerodynamic
+        forces and non-dimensional drag coefficient.</p>
+        <div class="stats">
+          <div class="stat"><div class="dot"></div><span>ADD FINAL Cd VALUE</span></div>
+          <div class="stat"><div class="dot"></div><span>k-ε TURBULENCE MODEL</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="project">
+    <div class="project-head">
+      <div>
+        <h3>BrailLearn</h3>
+        <span class="project-award">1st Place — SWE SWEMatch Competition</span>
+      </div>
+      <div class="project-meta">ESP32 · C++ · REACT<br>SEPT 2025 – PRESENT</div>
+    </div>
+    <div class="project-body">
+      <div class="img-slot">FIG. 2 — INSERT DEVICE / GLOVE PHOTO<div class="c2"></div></div>
+      <div class="project-text">
+        <span class="field-label">Role</span>
+        <p>Wired and tested the sensor hardware, wrote the decoding algorithms, and built the live dashboard.</p>
+        <span class="field-label">What it does</span>
+        <p>A wearable glove that reads Braille input in real time through a 6-sensor force array, decodes it
+        on an ESP32, and streams results to a live dashboard — built to support repetition-based,
+        muscle-memory learning for adults and late-life learners.</p>
+        <div class="stats">
+          <div class="stat"><div class="dot"></div><span>95% DECODING ACCURACY</span></div>
+          <div class="stat"><div class="dot"></div><span>63 BRAILLE SYMBOLS</span></div>
+          <div class="stat"><div class="dot"></div><span>6 INDUSTRY JUDGES</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="project">
+    <div class="project-head">
+      <div>
+        <h3>Artificial Muscle Prosthetic</h3>
+        <span class="project-award">Research &amp; Feasibility Study</span>
+      </div>
+      <div class="project-meta">SOLIDWORKS · SIMULINK<br>AUG – DEC 2025</div>
+    </div>
+    <div class="project-body">
+      <div class="img-slot">FIG. 3 — INSERT CONCEPT SKETCH / SIMULINK MODEL<div class="c2"></div></div>
+      <div class="project-text">
+        <span class="field-label">Role</span>
+        <p>Led the research and feasibility phase, then modeled joint motion to estimate force requirements.</p>
+        <span class="field-label">What it does</span>
+        <p>Evaluated pneumatic artificial muscle actuation for a wrist/forearm prosthetic — assessing
+        ergonomics and joint-alignment constraints, modeling joint motion in Simulink, and proposing an
+        EMG / IMU / pressure-sensing control architecture for future prototyping.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="project">
+    <div class="project-head">
+      <div>
+        <h3>WiSPR — Wireless Safety Pulse Relay</h3>
+        <span class="project-award">1st Place, Beginner Track — HackUTD</span>
+      </div>
+      <div class="project-meta">ARDUINO · REACT<br>NOV 2025</div>
+    </div>
+    <div class="project-body">
+      <div class="img-slot">FIG. 4 — INSERT HARDWARE / TESTING PHOTO<div class="c2"></div></div>
+      <div class="project-text">
+        <span class="field-label">Role</span>
+        <p>Helped design and wire the dual-Arduino hardware, and built the real-time monitoring dashboard.</p>
+        <span class="field-label">What it does</span>
+        <p>A dual-Arduino alert relay for high-noise environments, using multi-mode alerts (quick vs. long
+        press) to cut ambiguity in emergency signaling, with a live dashboard visualizing sensor feeds.</p>
+        <div class="stats">
+          <div class="stat"><div class="dot"></div><span>85% FEWER AMBIGUOUS ALERTS</span></div>
+          <div class="stat"><div class="dot"></div><span>SUB-200MS RESPONSE</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills" class="bom">
+  <div class="sheet-label" style="color:var(--graphite)">
+    <span class="num" style="color:#B85416">02</span>
+    <h2 style="color:var(--graphite)">Bill of Materials — Skills</h2>
+  </div>
+  <table>
+    <thead>
+      <tr><th>Item</th><th>Description</th><th>Category</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="item-no">001</td><td>Creo</td><td class="cat">CAD &amp; Design</td></tr>
+      <tr><td class="item-no">002</td><td>SolidWorks</td><td class="cat">CAD &amp; Design</td></tr>
+      <tr><td class="item-no">003</td><td>AutoCAD</td><td class="cat">CAD &amp; Design</td></tr>
+      <tr><td class="item-no">004</td><td>TinkerCAD</td><td class="cat">CAD &amp; Design</td></tr>
+      <tr><td class="item-no">005</td><td>ANSYS Fluent</td><td class="cat">Simulation &amp; Analysis</td></tr>
+      <tr><td class="item-no">006</td><td>MATLAB</td><td class="cat">Simulation &amp; Analysis</td></tr>
+      <tr><td class="item-no">007</td><td>Simulink</td><td class="cat">Simulation &amp; Analysis</td></tr>
+      <tr><td class="item-no">008</td><td>Arduino / ESP32</td><td class="cat">Hardware &amp; Prototyping</td></tr>
+      <tr><td class="item-no">009</td><td>Sensor Integration — FSR, Temp/Humidity</td><td class="cat">Hardware &amp; Prototyping</td></tr>
+      <tr><td class="item-no">010</td><td>Circuit Wiring &amp; Breadboarding</td><td class="cat">Hardware &amp; Prototyping</td></tr>
+      <tr><td class="item-no">011</td><td>C / C++</td><td class="cat">Programming</td></tr>
+      <tr><td class="item-no">012</td><td>JavaScript — React, Node.js</td><td class="cat">Programming</td></tr>
+      <tr><td class="item-no">013</td><td>Git / GitHub, Figma</td><td class="cat">Tools</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="experience">
+  <div class="sheet-label"><span class="num">03</span><h2>Experience &amp; Leadership</h2></div>
+
+  <div class="exp-item">
+    <div class="when">FALL 2025 – PRESENT</div>
+    <div>
+      <h4>Peer Advisor (Resident Advisor)</h4>
+      <div class="org">University of Texas at Dallas</div>
+      <p>Oversee residential communities of 32+ students during fall/spring and 100+ during the summer —
+      mentorship, conflict resolution, on-call and front-desk crisis response.</p>
+    </div>
+  </div>
+
+  <div class="exp-item">
+    <div class="when">JUNE 2024 – PRESENT</div>
+    <div>
+      <h4>Events Coordinator</h4>
+      <div class="org">American Society for Biochemistry and Molecular Biology</div>
+      <p>Coordinated partnerships with the Perot Museum, Dallas Arboretum, and local schools, managing
+      logistics for 200+ student volunteers.</p>
+    </div>
+  </div>
+
+  <div class="exp-item">
+    <div class="when">SEPT 2025 – PRESENT</div>
+    <div>
+      <h4>Treasurer</h4>
+      <div class="org">Society of Asian Scientists and Engineers</div>
+      <p>Managed budgets and fundraising for a 100+ member engineering organization to improve event
+      accessibility.</p>
+    </div>
+  </div>
+
+  <div class="exp-item">
+    <div class="when">2022 – 2025 · SEASONAL</div>
+    <div>
+      <h4>Front of House Team Member</h4>
+      <div class="org">Lua Viet Kitchen, Houston, TX</div>
+      <p>Maintained consistent, reliable performance across 3+ years of seasonal employment in a fast-paced
+      service environment.</p>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="sheet-label"><span class="num">04</span></div>
+  <div class="cta">Open to Summer &amp; Fall 2027 roles in Mechanical, Aerospace, Automotive &amp; Biomedical Engineering.</div>
+  <div class="contact-row">
+    <div><span>TEL&nbsp;</span>936-553-9666</div>
+    <div><span>MAIL&nbsp;</span><a href="mailto:paris.u.ngo@gmail.com">paris.u.ngo@gmail.com</a></div>
+    <div><span>LINKEDIN&nbsp;</span><a href="https://linkedin.com/in/paris-ngo" target="_blank" rel="noopener">linkedin.com/in/paris-ngo</a></div>
+  </div>
+  <div class="fine">SHEET 1 OF 1 &nbsp;·&nbsp; SCALE N.T.S. &nbsp;·&nbsp; LAST REVISED AUG 2026</div>
+</footer>
+
+</body>
+</html>
