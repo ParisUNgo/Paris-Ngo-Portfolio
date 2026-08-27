@@ -144,16 +144,7 @@
   .img-slot{
     aspect-ratio:16/10;border:1px dashed var(--line-dim);position:relative;
     display:flex;align-items:center;justify-content:center;
-    font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--line-dim);
-    text-align:center;padding:20px;letter-spacing:0.05em;text-transform:uppercase;
   }
-  .img-slot::before,.img-slot::after,
-  .img-slot .c2::before,.img-slot .c2::after{content:"";position:absolute;width:14px;height:14px;border-color:var(--safety);}
-  .img-slot::before{top:-1px;left:-1px;border-top:2px solid var(--safety);border-left:2px solid var(--safety);}
-  .img-slot::after{top:-1px;right:-1px;border-top:2px solid var(--safety);border-right:2px solid var(--safety);}
-  .img-slot .c2{position:absolute;inset:0;}
-  .img-slot .c2::before{bottom:-1px;left:-1px;border-bottom:2px solid var(--safety);border-left:2px solid var(--safety);}
-  .img-slot .c2::after{bottom:-1px;right:-1px;border-bottom:2px solid var(--safety);border-right:2px solid var(--safety);}
 
   .project-text p{font-size:14.5px;margin-bottom:14px;}
   .project-text .field-label{
@@ -203,6 +194,72 @@
   }
   footer .contact-row{margin-top:24px;}
   footer .fine{margin-top:40px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--line-dim);letter-spacing:0.05em;}
+  /* ---------- ABOUT ---------- */
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;}
+  @media (max-width:760px){.about-grid{grid-template-columns:1fr;}}
+  .about-text p{font-size:16px;margin-bottom:16px;max-width:560px;}
+  .about-tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px;}
+  .about-tag{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;
+    border:1px solid var(--line-dim);color:var(--line-dim);padding:5px 11px;
+  }
+  .origin-block{
+    border-left:2px solid var(--safety);padding-left:20px;
+  }
+  .origin-block .field-label{
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.1em;
+    color:var(--safety);text-transform:uppercase;display:block;margin-bottom:10px;
+  }
+  .origin-block p{font-size:14px;color:var(--line-dim);}
+
+  /* ---------- SKILL PROFICIENCY BARS ---------- */
+  .bom .prof-cell{min-width:150px;}
+  .prof-bar{
+    position:relative;width:120px;height:8px;background:rgba(30,33,38,0.12);
+  }
+  .prof-bar-fill{
+    position:absolute;top:0;left:0;height:100%;background:#B85416;
+  }
+  .prof-label{font-size:10px;color:var(--graphite-soft);margin-left:8px;}
+  .prof-wrap{display:flex;align-items:center;}
+
+  /* ---------- IMAGE CAROUSEL ---------- */
+  .carousel{position:relative;}
+  .carousel-track{aspect-ratio:16/10;position:relative;overflow:hidden;border:1px dashed var(--line-dim);}
+  .carousel-slide{
+    position:absolute;inset:0;display:none;
+    flex-direction:column;align-items:center;justify-content:center;
+    padding:20px;text-align:center;
+  }
+  .carousel-slide.active{display:flex;}
+  .carousel-slide .placeholder-text{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--line-dim);
+    letter-spacing:0.05em;text-transform:uppercase;
+  }
+  .carousel-slide img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;}
+  .carousel-caption{
+    position:absolute;bottom:0;left:0;right:0;
+    background:rgba(8,27,48,0.85);
+    font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--line);
+    padding:8px 12px;letter-spacing:0.03em;z-index:2;
+  }
+  .carousel-track::before,.carousel-track::after{content:"";position:absolute;width:14px;height:14px;z-index:3;pointer-events:none;}
+  .carousel-track::before{top:-1px;left:-1px;border-top:2px solid var(--safety);border-left:2px solid var(--safety);}
+  .carousel-track::after{bottom:-1px;right:-1px;border-bottom:2px solid var(--safety);border-right:2px solid var(--safety);}
+  .carousel-nav{
+    display:flex;justify-content:space-between;align-items:center;margin-top:10px;
+  }
+  .carousel-btn{
+    background:transparent;border:1px solid var(--line-dim);color:var(--line);
+    font-family:'IBM Plex Mono',monospace;font-size:12px;padding:5px 12px;cursor:pointer;
+  }
+  .carousel-btn:hover{border-color:var(--safety);color:var(--safety);}
+  .carousel-dots{display:flex;gap:7px;}
+  .carousel-dot{
+    width:7px;height:7px;border-radius:50%;background:var(--line-dim);border:none;cursor:pointer;padding:0;
+  }
+  .carousel-dot.active{background:var(--safety);}
+
 </style>
 </head>
 <body class="bg-grid">
@@ -210,6 +267,7 @@
 <nav>
   <span class="tag">PN&nbsp;/&nbsp;MECH-ENG&nbsp;/&nbsp;PORTFOLIO&nbsp;REV.A</span>
   <ul>
+    <li><a href="#about">About</a></li>
     <li><a href="#projects">Projects</a></li>
     <li><a href="#skills">Skills</a></li>
     <li><a href="#experience">Experience</a></li>
@@ -218,14 +276,13 @@
 </nav>
 
 <header class="hero">
-  <span class="status-chip">Seeking Summer / Fall 2027 Internships</span>
+  <span class="status-chip">Seeking Spring &amp; Summer 2027 Internships</span>
   <h1 class="name">Paris Ngo</h1>
   <div class="role-line">Mechanical Engineering &nbsp;·&nbsp; University of Texas at Dallas &nbsp;·&nbsp; Class of 2027</div>
   <div class="dim-divider"><div class="tick"></div><div class="rule"></div><div class="tick"></div></div>
   <p class="hero-intro">
     I build and test hardware — from wearable assistive devices to safety-alert systems to CFD models of
-    vehicle aerodynamics. I'm most interested in mechanical, aerospace, automotive, and biomedical
-    engineering roles where I can move between CAD, analysis, and a physical prototype on the bench.
+    vehicle aerodynamics — with a particular pull toward biomedical devices and prosthetics.
   </p>
   <div class="contact-row">
     <div><span>TEL&nbsp;</span>936-553-9666</div>
@@ -233,6 +290,32 @@
     <div><span>LINKEDIN&nbsp;</span><a href="https://linkedin.com/in/paris-ngo" target="_blank" rel="noopener">linkedin.com/in/paris-ngo</a></div>
   </div>
 </header>
+
+<section id="about">
+  <div class="sheet-label"><span class="num">00</span><h2>About</h2></div>
+  <div class="about-grid">
+    <div class="about-text">
+            <p>I came to college planning to go into medicine. A year in, engineering pulled me a different
+      direction: I sat in on classes and talked to professors and after hearing the SAE Formula racing team
+      testing their car outside the engineering building, I was hooked.</p>
+      <p>I didn't expect to enjoy math, but I like working through a hard problem until the answer holds up.
+      I'm most drawn to biomedical devices, prosthetics especially, since I still want work that helps
+      people directly. I also love aerospace and automotive, which is why my projects range from a
+      Braille-reading glove to vehicle aerodynamics.</p>
+      <div class="about-tags">
+        <span class="about-tag">Biomedical Devices</span>
+        <span class="about-tag">Aerospace</span>
+        <span class="about-tag">Automotive</span>
+        
+
+      </div>
+    </div>
+    <div class="origin-block">
+      <span class="field-label">Currently Focused On</span>
+      <p>Continuing to build out BrailLearn as a full assistive learning platform.</p>
+    </div>
+  </div>
+</section>
 
 <section id="projects">
   <div class="sheet-label"><span class="num">01</span><h2>Projects</h2></div>
@@ -246,10 +329,30 @@
       <div class="project-meta">ANSYS · FLUENT<br>SUMMER 2026</div>
     </div>
     <div class="project-body">
-      <div class="img-slot">FIG. 1 — INSERT ANSYS CONTOUR / STREAMLINE PLOT<div class="c2"></div></div>
+      <div class="carousel" data-carousel="cfd">
+        <div class="carousel-track">
+          <div class="carousel-slide active">
+            <span class="placeholder-text">FIG. 1a — INSERT VELOCITY CONTOUR PLOT</span>
+            <div class="carousel-caption">Velocity contour plot around the vehicle body</div>
+          </div>
+          <div class="carousel-slide">
+            <span class="placeholder-text">FIG. 1b — INSERT STREAMLINE PLOT</span>
+            <div class="carousel-caption">Streamlines showing flow separation and wake behavior</div>
+          </div>
+          <div class="carousel-slide">
+            <span class="placeholder-text">FIG. 1c — INSERT MESH / SETUP SCREENSHOT</span>
+            <div class="carousel-caption">Mesh and boundary condition setup in ANSYS</div>
+          </div>
+        </div>
+        <div class="carousel-nav">
+          <button class="carousel-btn" onclick="moveCarousel('cfd',-1)">&larr; Prev</button>
+          <div class="carousel-dots"></div>
+          <button class="carousel-btn" onclick="moveCarousel('cfd',1)">Next &rarr;</button>
+        </div>
+      </div>
       <div class="project-text">
         <span class="field-label">Role</span>
-        <p>Simulations lead — set up the 2D steady RANS simulation and calculated the resulting aerodynamic forces.</p>
+        <p>Simulations lead,  set up the 2D steady RANS simulation and calculated the resulting aerodynamic forces.</p>
         <span class="field-label">What it does</span>
         <p>Solves the steady RANS equations over a 2D Honda Civic body cross-section using a k-ε turbulence
         model, producing velocity/pressure contour plots and streamlines, then derives the aerodynamic
@@ -271,13 +374,33 @@
       <div class="project-meta">ESP32 · C++ · REACT<br>SEPT 2025 – PRESENT</div>
     </div>
     <div class="project-body">
-      <div class="img-slot">FIG. 2 — INSERT DEVICE / GLOVE PHOTO<div class="c2"></div></div>
+      <div class="carousel" data-carousel="brail">
+        <div class="carousel-track">
+          <div class="carousel-slide active">
+            <span class="placeholder-text">FIG. 2a — INSERT GLOVE PHOTO</span>
+            <div class="carousel-caption">The finished glove with the 6-FSR sensor array</div>
+          </div>
+          <div class="carousel-slide">
+            <span class="placeholder-text">FIG. 2b — INSERT DASHBOARD SCREENSHOT</span>
+            <div class="carousel-caption">React dashboard streaming live sensor data</div>
+          </div>
+          <div class="carousel-slide">
+            <span class="placeholder-text">FIG. 2c — INSERT COMPETITION PHOTO</span>
+            <div class="carousel-caption">Presenting at the SWE SWEMatch competition</div>
+          </div>
+        </div>
+        <div class="carousel-nav">
+          <button class="carousel-btn" onclick="moveCarousel('brail',-1)">&larr; Prev</button>
+          <div class="carousel-dots"></div>
+          <button class="carousel-btn" onclick="moveCarousel('brail',1)">Next &rarr;</button>
+        </div>
+      </div>
       <div class="project-text">
         <span class="field-label">Role</span>
-        <p>Wired and tested the sensor hardware, wrote the decoding algorithms, and built the live dashboard.</p>
+        <p>Helped wire and test the sensor hardware and built the live dashboard.</p>
         <span class="field-label">What it does</span>
         <p>A wearable glove that reads Braille input in real time through a 6-sensor force array, decodes it
-        on an ESP32, and streams results to a live dashboard — built to support repetition-based,
+        on an ESP32, and streams results to a live dashboard,  built to support repetition-based,
         muscle-memory learning for adults and late-life learners.</p>
         <div class="stats">
           <div class="stat"><div class="dot"></div><span>95% DECODING ACCURACY</span></div>
@@ -297,10 +420,26 @@
       <div class="project-meta">SOLIDWORKS · SIMULINK<br>AUG – DEC 2025</div>
     </div>
     <div class="project-body">
-      <div class="img-slot">FIG. 3 — INSERT CONCEPT SKETCH / SIMULINK MODEL<div class="c2"></div></div>
+      <div class="carousel" data-carousel="amp">
+        <div class="carousel-track">
+          <div class="carousel-slide active">
+            <span class="placeholder-text">FIG. 3a — INSERT CONCEPT SKETCH</span>
+            <div class="carousel-caption">Early concept sketch of the actuation approach</div>
+          </div>
+          <div class="carousel-slide">
+            <span class="placeholder-text">FIG. 3b — INSERT SIMULINK MODEL</span>
+            <div class="carousel-caption">Simulink model estimating joint force requirements</div>
+          </div>
+        </div>
+        <div class="carousel-nav">
+          <button class="carousel-btn" onclick="moveCarousel('amp',-1)">&larr; Prev</button>
+          <div class="carousel-dots"></div>
+          <button class="carousel-btn" onclick="moveCarousel('amp',1)">Next &rarr;</button>
+        </div>
+      </div>
       <div class="project-text">
         <span class="field-label">Role</span>
-        <p>Led the research and feasibility phase, then modeled joint motion to estimate force requirements.</p>
+        <p>Assisted in the research and feasibility phase.</p>
         <span class="field-label">What it does</span>
         <p>Evaluated pneumatic artificial muscle actuation for a wrist/forearm prosthetic — assessing
         ergonomics and joint-alignment constraints, modeling joint motion in Simulink, and proposing an
@@ -318,7 +457,27 @@
       <div class="project-meta">ARDUINO · REACT<br>NOV 2025</div>
     </div>
     <div class="project-body">
-      <div class="img-slot">FIG. 4 — INSERT HARDWARE / TESTING PHOTO<div class="c2"></div></div>
+      <div class="carousel" data-carousel="wispr">
+        <div class="carousel-track">
+          <div class="carousel-slide active">
+            <span class="placeholder-text">FIG. 4a — INSERT HARDWARE PHOTO</span>
+            <div class="carousel-caption">The dual-Arduino alert circuit during build</div>
+          </div>
+          <div class="carousel-slide">
+            <span class="placeholder-text">FIG. 4b — INSERT TESTING PHOTO</span>
+            <div class="carousel-caption">Testing the multi-mode alert system</div>
+          </div>
+          <div class="carousel-slide">
+            <span class="placeholder-text">FIG. 4c — INSERT HACKUTD PHOTO</span>
+            <div class="carousel-caption">Team photo from HackUTD, 1st Place Beginner Track</div>
+          </div>
+        </div>
+        <div class="carousel-nav">
+          <button class="carousel-btn" onclick="moveCarousel('wispr',-1)">&larr; Prev</button>
+          <div class="carousel-dots"></div>
+          <button class="carousel-btn" onclick="moveCarousel('wispr',1)">Next &rarr;</button>
+        </div>
+      </div>
       <div class="project-text">
         <span class="field-label">Role</span>
         <p>Helped design and wire the dual-Arduino hardware, and built the real-time monitoring dashboard.</p>
@@ -341,24 +500,27 @@
   </div>
   <table>
     <thead>
-      <tr><th>Item</th><th>Description</th><th>Category</th></tr>
+      <tr><th>Item</th><th>Description</th><th>Category</th><th>Proficiency</th></tr>
     </thead>
     <tbody>
-      <tr><td class="item-no">001</td><td>Creo</td><td class="cat">CAD &amp; Design</td></tr>
-      <tr><td class="item-no">002</td><td>SolidWorks</td><td class="cat">CAD &amp; Design</td></tr>
-      <tr><td class="item-no">003</td><td>AutoCAD</td><td class="cat">CAD &amp; Design</td></tr>
-      <tr><td class="item-no">004</td><td>TinkerCAD</td><td class="cat">CAD &amp; Design</td></tr>
-      <tr><td class="item-no">005</td><td>ANSYS Fluent</td><td class="cat">Simulation &amp; Analysis</td></tr>
-      <tr><td class="item-no">006</td><td>MATLAB</td><td class="cat">Simulation &amp; Analysis</td></tr>
-      <tr><td class="item-no">007</td><td>Simulink</td><td class="cat">Simulation &amp; Analysis</td></tr>
-      <tr><td class="item-no">008</td><td>Arduino / ESP32</td><td class="cat">Hardware &amp; Prototyping</td></tr>
-      <tr><td class="item-no">009</td><td>Sensor Integration — FSR, Temp/Humidity</td><td class="cat">Hardware &amp; Prototyping</td></tr>
-      <tr><td class="item-no">010</td><td>Circuit Wiring &amp; Breadboarding</td><td class="cat">Hardware &amp; Prototyping</td></tr>
-      <tr><td class="item-no">011</td><td>C / C++</td><td class="cat">Programming</td></tr>
-      <tr><td class="item-no">012</td><td>JavaScript — React, Node.js</td><td class="cat">Programming</td></tr>
-      <tr><td class="item-no">013</td><td>Git / GitHub, Figma</td><td class="cat">Tools</td></tr>
+      <tr><td class="item-no">001</td><td>Creo</td><td class="cat">CAD &amp; Design</td><td class="prof-cell"><div class="prof-wrap"><div class="prof-bar"><div class="prof-bar-fill" style="width:85%"></div></div></div></td></tr>
+      <tr><td class="item-no">002</td><td>SolidWorks</td><td class="cat">CAD &amp; Design</td><td class="prof-cell"><div class="prof-wrap"><div class="prof-bar"><div class="prof-bar-fill" style="width:55%"></div></div></div></td></tr>
+      <tr><td class="item-no">003</td><td>AutoCAD</td><td class="cat">CAD &amp; Design</td><td class="prof-cell"><div class="prof-wrap"><div class="prof-bar"><div class="prof-bar-fill" style="width:60%"></div></div></div></td></tr>
+      <tr><td class="item-no">004</td><td>TinkerCAD</td><td class="cat">CAD &amp; Design</td><td class="prof-cell"><div class="prof-wrap"><div class="prof-bar"><div class="prof-bar-fill" style="width:45%"></div></div></div></td></tr>
+      <tr><td class="item-no">005</td><td>ANSYS Fluent</td><td class="cat">Simulation &amp; Analysis</td><td class="prof-cell"><div class="prof-wrap"><div class="prof-bar"><div class="prof-bar-fill" style="width:35%"></div></div></div></td></tr>
+      <tr><td class="item-no">006</td><td>MATLAB</td><td class="cat">Simulation &amp; Analysis</td><td class="prof-cell"><div class="prof-wrap"><div class="prof-bar"><div class="prof-bar-fill" style="width:55%"></div></div></div></td></tr>
+      <tr><td class="item-no">007</td><td>Simulink</td><td class="cat">Simulation &amp; Analysis</td><td class="prof-cell"><div class="prof-wrap"><div class="prof-bar"><div class="prof-bar-fill" style="width:55%"></div></div></div></td></tr>
+      <tr><td class="item-no">008</td><td>Arduino / ESP32</td><td class="cat">Hardware &amp; Prototyping</td><td class="prof-cell"><div class="prof-wrap"><div class="prof-bar"><div class="prof-bar-fill" style="width:80%"></div></div></div></td></tr>
+      <tr><td class="item-no">009</td><td>Sensor Integration — FSR, Temp/Humidity</td><td class="cat">Hardware &amp; Prototyping</td><td class="prof-cell"><div class="prof-wrap"><div class="prof-bar"><div class="prof-bar-fill" style="width:80%"></div></div></div></td></tr>
+      <tr><td class="item-no">010</td><td>Circuit Wiring &amp; Breadboarding</td><td class="cat">Hardware &amp; Prototyping</td><td class="prof-cell"><div class="prof-wrap"><div class="prof-bar"><div class="prof-bar-fill" style="width:75%"></div></div></div></td></tr>
+      <tr><td class="item-no">011</td><td>C / C++</td><td class="cat">Programming</td><td class="prof-cell"><div class="prof-wrap"><div class="prof-bar"><div class="prof-bar-fill" style="width:70%"></div></div></div></td></tr>
+      <tr><td class="item-no">012</td><td>JavaScript — React, Node.js</td><td class="cat">Programming</td><td class="prof-cell"><div class="prof-wrap"><div class="prof-bar"><div class="prof-bar-fill" style="width:80%"></div></div></div></td></tr>
+      <tr><td class="item-no">013</td><td>Git / GitHub, Figma</td><td class="cat">Tools</td><td class="prof-cell"><div class="prof-wrap"><div class="prof-bar"><div class="prof-bar-fill" style="width:60%"></div></div></div></td></tr>
     </tbody>
   </table>
+  <p style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--graphite-soft);margin-top:14px;letter-spacing:0.03em;">
+    NOTE — bar lengths are starting estimates based on our conversation. Search "prof-bar-fill" in the code and adjust the width% on each to reflect your own honest self-assessment.
+  </p>
 </section>
 
 <section id="experience">
@@ -407,7 +569,7 @@
 
 <footer id="contact">
   <div class="sheet-label"><span class="num">04</span></div>
-  <div class="cta">Open to Summer &amp; Fall 2027 roles in Mechanical, Aerospace, Automotive &amp; Biomedical Engineering.</div>
+  <div class="cta">Open to Spring &amp; Summer 2027 roles in Mechanical, Aerospace, Automotive &amp; Biomedical Engineering.</div>
   <div class="contact-row">
     <div><span>TEL&nbsp;</span>936-553-9666</div>
     <div><span>MAIL&nbsp;</span><a href="mailto:paris.u.ngo@gmail.com">paris.u.ngo@gmail.com</a></div>
@@ -416,5 +578,40 @@
   <div class="fine">SHEET 1 OF 1 &nbsp;·&nbsp; SCALE N.T.S. &nbsp;·&nbsp; LAST REVISED AUG 2026</div>
 </footer>
 
+<script>
+  // Builds dot indicators and click/keyboard navigation for each project carousel.
+  document.querySelectorAll('.carousel').forEach(function(carousel){
+    var name = carousel.getAttribute('data-carousel');
+    var slides = carousel.querySelectorAll('.carousel-slide');
+    var dotsWrap = carousel.querySelector('.carousel-dots');
+    var current = 0;
+
+    slides.forEach(function(_, i){
+      var dot = document.createElement('button');
+      dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', 'Go to image ' + (i + 1));
+      dot.addEventListener('click', function(){ setSlide(name, i); });
+      dotsWrap.appendChild(dot);
+    });
+  });
+
+  function setSlide(name, index){
+    var carousel = document.querySelector('[data-carousel="' + name + '"]');
+    var slides = carousel.querySelectorAll('.carousel-slide');
+    var dots = carousel.querySelectorAll('.carousel-dot');
+    var total = slides.length;
+    var newIndex = ((index % total) + total) % total;
+
+    slides.forEach(function(s, i){ s.classList.toggle('active', i === newIndex); });
+    dots.forEach(function(d, i){ d.classList.toggle('active', i === newIndex); });
+    carousel.setAttribute('data-current', newIndex);
+  }
+
+  function moveCarousel(name, delta){
+    var carousel = document.querySelector('[data-carousel="' + name + '"]');
+    var current = parseInt(carousel.getAttribute('data-current') || '0', 10);
+    setSlide(name, current + delta);
+  }
+</script>
 </body>
 </html>
