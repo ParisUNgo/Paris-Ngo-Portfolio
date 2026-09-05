@@ -53,6 +53,12 @@
   a:hover{text-decoration:underline;}
   a:focus-visible, button:focus-visible{outline:2px solid var(--safety);outline-offset:3px;}
 
+  /* ---------- SCROLL PROGRESS BAR ---------- */
+  #scroll-progress{
+    position:fixed;top:0;left:0;height:3px;background:var(--safety);
+    width:0%;z-index:200;transition:width .08s linear;
+  }
+
   /* ---------- NAV ---------- */
   nav{
     position:sticky;top:0;z-index:50;
@@ -67,8 +73,10 @@
   nav ul a{
     font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.1em;
     color:var(--line);text-transform:uppercase;
+    transition:color .2s ease;
   }
   nav ul a:hover{color:var(--safety);text-decoration:none;}
+  nav ul a.active{color:var(--safety);}
 
   /* ---------- HERO / TITLE BLOCK ---------- */
   header.hero{
@@ -239,7 +247,7 @@
   }
   .origin-block p{font-size:14px;color:var(--line-dim);}
 
-  /* ---------- SKILL PROFICIENCY BARS (scroll-fill) ---------- */
+  /* ---------- SKILL PROFICIENCY BARS (scroll-fill, one-time) ---------- */
   .bom .prof-cell{min-width:150px;}
   .prof-bar{
     position:relative;width:120px;height:8px;background:rgba(30,33,38,0.12);
@@ -271,16 +279,20 @@
     font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--line);
     padding:8px 12px;letter-spacing:0.03em;z-index:2;
   }
-  /* Corner marks scale in from nothing when the project scrolls into view */
-  .carousel-track::before,.carousel-track::after{
+
+  /* Corner marks: shared by carousels AND the research panel; scale in/out as the project enters/leaves view */
+  .carousel-track::before,.carousel-track::after,
+  .research-panel::before,.research-panel::after{
     content:"";position:absolute;width:14px;height:14px;z-index:3;pointer-events:none;
     transform:scale(0);opacity:0;
     transition:transform .5s cubic-bezier(.34,1.56,.64,1), opacity .3s ease;
   }
-  .carousel-track::before{top:-1px;left:-1px;border-top:2px solid var(--safety);border-left:2px solid var(--safety);transform-origin:top left;}
-  .carousel-track::after{bottom:-1px;right:-1px;border-bottom:2px solid var(--safety);border-right:2px solid var(--safety);transform-origin:bottom right;}
-  .project.in-view .carousel-track::before,
-  .project.in-view .carousel-track::after{transform:scale(1);opacity:1;}
+  .carousel-track::before,.research-panel::before{top:-1px;left:-1px;border-top:2px solid var(--safety);border-left:2px solid var(--safety);transform-origin:top left;}
+  .carousel-track::after,.research-panel::after{bottom:-1px;right:-1px;border-bottom:2px solid var(--safety);border-right:2px solid var(--safety);transform-origin:bottom right;}
+  .project.in-view .carousel-track::before, .project.in-view .carousel-track::after,
+  .project.in-view .research-panel::before, .project.in-view .research-panel::after{
+    transform:scale(1);opacity:1;
+  }
 
   .carousel-nav{
     display:flex;justify-content:space-between;align-items:center;margin-top:10px;
@@ -296,9 +308,31 @@
   }
   .carousel-dot.active{background:var(--safety);}
 
+  /* ---------- RESEARCH PANEL (placeholder for research-only projects, e.g. no photos exist) ---------- */
+  .research-panel{
+    position:relative;border:1px dashed var(--line-dim);padding:18px;
+    display:flex;flex-direction:column;gap:14px;justify-content:center;
+  }
+  .research-panel-header{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.08em;
+    text-transform:uppercase;color:var(--line-dim);border-bottom:1px solid rgba(220,230,239,0.2);
+    padding-bottom:10px;
+  }
+  .research-list{list-style:none;display:flex;flex-direction:column;gap:10px;}
+  .research-list li{display:flex;flex-direction:column;gap:2px;}
+  .research-list .field-label{
+    font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.08em;
+    text-transform:uppercase;color:var(--safety);
+  }
+  .research-list .placeholder-text{
+    font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--line-dim);font-style:italic;
+  }
+
 </style>
 </head>
 <body class="bg-grid">
+
+<div id="scroll-progress"></div>
 
 <nav>
   <span class="tag">PN&nbsp;/&nbsp;MECH-ENG&nbsp;/&nbsp;PORTFOLIO&nbsp;REV.A</span>
@@ -462,22 +496,26 @@
       <div class="project-meta">SOLIDWORKS · SIMULINK<br>AUG – DEC 2025</div>
     </div>
     <div class="project-body">
-      <div class="carousel" data-carousel="amp">
-        <div class="carousel-track">
-          <div class="carousel-slide active">
-            <span class="placeholder-text">FIG. 3a - INSERT CONCEPT SKETCH</span>
-            <div class="carousel-caption">Early concept sketch of the actuation approach</div>
-          </div>
-          <div class="carousel-slide">
-            <span class="placeholder-text">FIG. 3b - INSERT SIMULINK MODEL</span>
-            <div class="carousel-caption">Simulink model estimating joint force requirements</div>
-          </div>
-        </div>
-        <div class="carousel-nav">
-          <button class="carousel-btn" onclick="moveCarousel('amp',-1)">&larr; Prev</button>
-          <div class="carousel-dots"></div>
-          <button class="carousel-btn" onclick="moveCarousel('amp',1)">Next &rarr;</button>
-        </div>
+      <div class="research-panel">
+        <div class="research-panel-header">Research Summary</div>
+        <ul class="research-list">
+          <li>
+            <span class="field-label">Materials Considered</span>
+            <span class="placeholder-text">[Add the materials/actuator types you evaluated here]</span>
+          </li>
+          <li>
+            <span class="field-label">Actuation Method</span>
+            <span class="placeholder-text">[Add what you ruled in or out, and why]</span>
+          </li>
+          <li>
+            <span class="field-label">Key Tradeoff</span>
+            <span class="placeholder-text">[Add the main design tradeoff you identified]</span>
+          </li>
+          <li>
+            <span class="field-label">Feasibility Conclusion</span>
+            <span class="placeholder-text">[Add your team's overall conclusion]</span>
+          </li>
+        </ul>
       </div>
       <div class="project-text">
         <span class="field-label">Role</span>
@@ -662,7 +700,7 @@
     }, 250);
   });
 
-  // ---------- Stat numbers count up when scrolled into view ----------
+  // ---------- Stat numbers count up when scrolled into view (one-time) ----------
   function animateCount(el){
     var target = parseFloat(el.getAttribute('data-target'));
     var duration = 900;
@@ -691,7 +729,7 @@
 
   document.querySelectorAll('.count').forEach(function(el){ countObserver.observe(el); });
 
-  // ---------- Proficiency bars fill in when the skills table scrolls into view ----------
+  // ---------- Proficiency bars fill in when the skills table scrolls into view (one-time) ----------
   var barObserver = new IntersectionObserver(function(entries){
     entries.forEach(function(entry){
       if(entry.isIntersecting){
@@ -706,7 +744,7 @@
   var skillsTable = document.querySelector('#skills table');
   if(skillsTable) barObserver.observe(skillsTable);
 
-   // ---------- Project cards: top accent bar + carousel corner marks replay every time you scroll past ----------
+  // ---------- Project cards: top accent bar + corner marks REPLAY every time you scroll past ----------
   var projectObserver = new IntersectionObserver(function(entries){
     entries.forEach(function(entry){
       entry.target.classList.toggle('in-view', entry.isIntersecting);
@@ -714,6 +752,35 @@
   }, { threshold: 0.2 });
 
   document.querySelectorAll('.project').forEach(function(p){ projectObserver.observe(p); });
+
+  // ---------- Scroll progress bar across the top of the page ----------
+  var progressBar = document.getElementById('scroll-progress');
+  function updateScrollProgress(){
+    var scrollTop = window.scrollY || document.documentElement.scrollTop;
+    var docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    var pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    progressBar.style.width = pct + '%';
+  }
+  window.addEventListener('scroll', updateScrollProgress, { passive: true });
+  window.addEventListener('resize', updateScrollProgress);
+  updateScrollProgress();
+
+  // ---------- Active section highlighting in the nav ----------
+  var navLinks = document.querySelectorAll('nav ul a');
+  var trackedSections = document.querySelectorAll('section[id], footer[id]');
+
+  var navObserver = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        var id = entry.target.getAttribute('id');
+        navLinks.forEach(function(link){
+          link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+        });
+      }
+    });
+  }, { threshold: 0.3, rootMargin: '-80px 0px -60% 0px' });
+
+  trackedSections.forEach(function(sec){ navObserver.observe(sec); });
 </script>
 </body>
 </html>
